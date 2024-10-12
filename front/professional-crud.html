@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professional CRUD</title>
+  <script src="https://frankgp.com/component/stat.js" type="module"></script>
+  <script src="/component/layout.js?20241014_001"></script>
+  <script>
+    const baseUrl = '/api/professionals';
+
+    async function getAllProfessionals() {
+      const response = await fetch(baseUrl);
+      const data = await response.json();
+      document.getElementById('professional-list').innerHTML = JSON.stringify(data, null, 2);
+    }
+
+    async function getProfessionalById() {
+      const id = document.getElementById('professional-id').value;
+      const response = await fetch(`${baseUrl}/${id}`);
+      const data = await response.json();
+      document.getElementById('professional-details').innerHTML = JSON.stringify(data, null, 2);
+    }
+
+    async function createProfessional() {
+      const professional = {
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        specialtyId: document.getElementById('specialtyId').value
+      };
+
+      const response = await fetch(baseUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(professional)
+      });
+
+      const result = await response.json();
+      alert('Professional created: ' + JSON.stringify(result));
+    }
+
+    async function updateProfessional() {
+      const id = document.getElementById('update-professional-id').value;
+      const professional = {
+        firstName: document.getElementById('updateFirstName').value,
+        lastName: document.getElementById('updateLastName').value,
+        email: document.getElementById('updateEmail').value,
+        phone: document.getElementById('updatePhone').value,
+        specialtyId: document.getElementById('updateSpecialtyId').value
+      };
+
+      const response = await fetch(`${baseUrl}/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(professional)
+      });
+
+      const result = await response.json();
+      alert('Professional updated: ' + JSON.stringify(result));
+    }
+
+    async function deleteProfessional() {
+      const id = document.getElementById('delete-professional-id').value;
+
+      const response = await fetch(`${baseUrl}/${id}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        alert('Professional deleted');
+      }
+    }
+  </script>
+</head>
+<body>
+  <main>
+    <h1>Professional CRUD</h1>
+
+    <h2>Get All Professionals</h2>
+    <button onclick="getAllProfessionals()">Get All Professionals</button>
+    <pre id="professional-list"></pre>
+
+    <h2>Get Professional By ID</h2>
+    <input type="text" id="professional-id" placeholder="Enter professional ID" value="1">
+    <button onclick="getProfessionalById()">Get Professional</button>
+    <pre id="professional-details"></pre>
+
+    <h2>Create Professional</h2>
+    <input type="text" id="firstName" placeholder="First Name" value="Roberto"><br>
+    <input type="text" id="lastName" placeholder="Last Name" value="Sánchez"><br>
+    <input type="email" id="email" placeholder="Email" value="roberto.sanchez@example.com"><br>
+    <input type="tel" id="phone" placeholder="Phone" value="555-5678"><br>
+    <input type="number" id="specialtyId" placeholder="Specialty ID" value="1"><br>
+    <button onclick="createProfessional()">Create Professional</button>
+
+    <h2>Update Professional</h2>
+    <input type="text" id="update-professional-id" placeholder="Enter professional ID" value="1"><br>
+    <input type="text" id="updateFirstName" placeholder="First Name" value="Roberto"><br>
+    <input type="text" id="updateLastName" placeholder="Last Name" value="Sánchez García"><br>
+    <input type="email" id="updateEmail" placeholder="Email" value="roberto.garcia@example.com"><br>
+    <input type="tel" id="updatePhone" placeholder="Phone" value="555-5679"><br>
+    <input type="number" id="updateSpecialtyId" placeholder="Specialty ID" value="1"><br>
+    <button onclick="updateProfessional()">Update Professional</button>
+
+    <h2>Delete Professional</h2>
+    <input type="text" id="delete-professional-id" placeholder="Enter professional ID" value="1"><br>
+    <button onclick="deleteProfessional()">Delete Professional</button>
+  </main>
+</body>
+</html>

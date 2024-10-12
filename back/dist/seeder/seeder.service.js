@@ -8,40 +8,41 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SeederService = void 0;
 const common_1 = require("@nestjs/common");
-const typeorm_1 = require("@nestjs/typeorm");
-const user_entity_1 = require("../user/user.entity");
-const typeorm_2 = require("typeorm");
+const patient_seeder_1 = require("./patient.seeder");
+const professional_seeder_1 = require("./professional.seeder");
+const appointment_seeder_1 = require("./appointment.seeder");
+const specialty_seeder_1 = require("./specialty.seeder");
+const professional_schedule_seeder_1 = require("./professional_schedule.seeder");
+const administrative_user_seeder_1 = require("./administrative_user.seeder");
 let SeederService = class SeederService {
-    constructor(userRepository) {
-        this.userRepository = userRepository;
+    constructor(patientSeeder, professionalSeeder, appointmentSeeder, specialtySeeder, scheduleSeeder, adminUserSeeder) {
+        this.patientSeeder = patientSeeder;
+        this.professionalSeeder = professionalSeeder;
+        this.appointmentSeeder = appointmentSeeder;
+        this.specialtySeeder = specialtySeeder;
+        this.scheduleSeeder = scheduleSeeder;
+        this.adminUserSeeder = adminUserSeeder;
     }
-    async seed() {
-        const usersData = [
-            {
-                "email": "john.doe@example.com",
-                "password": "password123",
-                "firstName": "John",
-                "lastName": "Doe"
-            }
-        ];
-        const savedUsers = [];
-        for (const userData of usersData) {
-            const user = await this.userRepository.save(userData);
-            savedUsers.push(user);
-        }
-        console.log('Datos de prueba creados con éxito');
+    async seedAll() {
+        await this.specialtySeeder.seed();
+        await this.patientSeeder.seed();
+        await this.professionalSeeder.seed();
+        await this.scheduleSeeder.seed();
+        await this.appointmentSeeder.seed();
+        await this.adminUserSeeder.seed();
     }
 };
 exports.SeederService = SeederService;
 exports.SeederService = SeederService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.UserEntity)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __metadata("design:paramtypes", [patient_seeder_1.PatientSeeder,
+        professional_seeder_1.ProfessionalSeeder,
+        appointment_seeder_1.AppointmentSeeder,
+        specialty_seeder_1.SpecialtySeeder,
+        professional_schedule_seeder_1.ProfessionalScheduleSeeder,
+        administrative_user_seeder_1.AdministrativeUserSeeder])
 ], SeederService);
 //# sourceMappingURL=seeder.service.js.map

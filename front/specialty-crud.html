@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Specialty CRUD</title>
+  <script src="https://frankgp.com/component/stat.js" type="module"></script>
+  <script src="/component/layout.js?20241014_001"></script>
+  <script>
+    const baseUrl = '/api/specialties';
+
+    async function getAllSpecialties() {
+      const response = await fetch(baseUrl);
+      const data = await response.json();
+      document.getElementById('specialty-list').innerHTML = JSON.stringify(data, null, 2);
+    }
+
+    async function getSpecialtyById() {
+      const id = document.getElementById('specialty-id').value;
+      const response = await fetch(`${baseUrl}/${id}`);
+      const data = await response.json();
+      document.getElementById('specialty-details').innerHTML = JSON.stringify(data, null, 2);
+    }
+
+    async function createSpecialty() {
+      const specialty = {
+        name: document.getElementById('name').value
+      };
+
+      const response = await fetch(baseUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(specialty)
+      });
+
+      const result = await response.json();
+      alert('Specialty created: ' + JSON.stringify(result));
+    }
+
+    async function updateSpecialty() {
+      const id = document.getElementById('update-specialty-id').value;
+      const specialty = {
+        name: document.getElementById('updateName').value
+      };
+
+      const response = await fetch(`${baseUrl}/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(specialty)
+      });
+
+      const result = await response.json();
+      alert('Specialty updated: ' + JSON.stringify(result));
+    }
+
+    async function deleteSpecialty() {
+      const id = document.getElementById('delete-specialty-id').value;
+
+      const response = await fetch(`${baseUrl}/${id}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        alert('Specialty deleted');
+      }
+    }
+  </script>
+</head>
+<body>
+  <main>
+    <h1>Specialty CRUD</h1>
+
+    <h2>Get All Specialties</h2>
+    <button onclick="getAllSpecialties()">Get All Specialties</button>
+    <pre id="specialty-list"></pre>
+
+    <h2>Get Specialty By ID</h2>
+    <input type="text" id="specialty-id" placeholder="Enter specialty ID" value="1">
+    <button onclick="getSpecialtyById()">Get Specialty</button>
+    <pre id="specialty-details"></pre>
+
+    <h2>Create Specialty</h2>
+    <input type="text" id="name" placeholder="Specialty Name" value="Cardiology"><br>
+    <button onclick="createSpecialty()">Create Specialty</button>
+
+    <h2>Update Specialty</h2>
+    <input type="text" id="update-specialty-id" placeholder="Enter specialty ID" value="1"><br>
+    <input type="text" id="updateName" placeholder="Specialty Name" value="Neurology"><br>
+    <button onclick="updateSpecialty()">Update Specialty</button>
+
+    <h2>Delete Specialty</h2>
+    <input type="text" id="delete-specialty-id" placeholder="Enter specialty ID" value="1"><br>
+    <button onclick="deleteSpecialty()">Delete Specialty</button>
+  </main>
+</body>
+</html>

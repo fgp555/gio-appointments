@@ -3,15 +3,19 @@ let fgp_header_html = /* html */ `<section>
     <div class="logo">
       <i class="btn_navbar icon-menu"></i>
       <h2>
-        <a href="/">App<span class="mobile-none">-project</span></a>
+        <a href="/">Gio<span class="mobile-none">-Appointments</span></a>
       </h2>
     </div>
 
   </div>
   <nav>
     <ul id="navbar" class="display_none">
-      <li><a href="./">Home</a></li>
-      <li><a href="./">Users Management</a></li>
+      <li><a href="/">appointments</a></li>
+      <!-- <li><a href="/administrative-user.html">administrative-user</a></li> -->
+      <li><a href="/patient-crud.html">patient</a></li>
+      <!-- <li><a href="/professional.html">professional</a></li> -->
+      <!-- <li><a href="/professional-schedule.html">professional-schedule</a></li> -->
+      <li><a href="/specialty-crud.html">specialty</a></li>
     </ul>
   </nav>
 </section>

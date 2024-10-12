@@ -10,9 +10,6 @@ import { SeederService } from './seeder/seeder.service';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  const seederService = app.get(SeederService);
-  await seederService.seed();
-
   app.setGlobalPrefix('api');
   app.use(cors());
   app.use(morgan('dev')); // Puedes usar 'tiny', 'dev', o cualquier otro formato que desees.

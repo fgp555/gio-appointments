@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administrative User CRUD</title>
+  <script src="https://frankgp.com/component/stat.js" type="module"></script>
+  <script src="/component/layout.js?20241014_001"></script>
+  <script>
+    const baseUrl = '/api/administrative-users';
+
+    async function getAllUsers() {
+      const response = await fetch(baseUrl);
+      const data = await response.json();
+      document.getElementById('user-list').innerHTML = JSON.stringify(data, null, 2);
+    }
+
+    async function getUserById() {
+      const id = document.getElementById('user-id').value;
+      const response = await fetch(`${baseUrl}/${id}`);
+      const data = await response.json();
+      document.getElementById('user-details').innerHTML = JSON.stringify(data, null, 2);
+    }
+
+    async function createUser() {
+      const user = {
+        username: document.getElementById('username').value,
+        password: document.getElementById('password').value,
+        role: document.getElementById('role').value
+      };
+
+      const response = await fetch(baseUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user)
+      });
+
+      const result = await response.json();
+      alert('User created: ' + JSON.stringify(result));
+    }
+
+    async function updateUser() {
+      const id = document.getElementById('update-user-id').value;
+      const user = {
+        username: document.getElementById('updateUsername').value,
+        password: document.getElementById('updatePassword').value,
+        role: document.getElementById('updateRole').value
+      };
+
+      const response = await fetch(`${baseUrl}/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(user)
+      });
+
+      const result = await response.json();
+      alert('User updated: ' + JSON.stringify(result));
+    }
+
+    async function deleteUser() {
+      const id = document.getElementById('delete-user-id').value;
+
+      const response = await fetch(`${baseUrl}/${id}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        alert('User deleted');
+      }
+    }
+  </script>
+</head>
+<body>
+  <main>
+    <h1>Administrative User CRUD</h1>
+
+    <h2>Get All Users</h2>
+    <button onclick="getAllUsers()">Get All Users</button>
+    <pre id="user-list"></pre>
+
+    <h2>Get User By ID</h2>
+    <input type="text" id="user-id" placeholder="Enter user ID" value="1">
+    <button onclick="getUserById()">Get User</button>
+    <pre id="user-details"></pre>
+
+    <h2>Create User</h2>
+    <input type="text" id="username" placeholder="Username" value="admin"><br>
+    <input type="password" id="password" placeholder="Password" value="admin123"><br>
+    <input type="text" id="role" placeholder="Role" value="Administrator"><br>
+    <button onclick="createUser()">Create User</button>
+
+    <h2>Update User</h2>
+    <input type="text" id="update-user-id" placeholder="Enter user ID" value="1"><br>
+    <input type="text" id="updateUsername" placeholder="Username" value="admin2"><br>
+    <input type="password" id="updatePassword" placeholder="Password" value="admin1234"><br>
+    <input type="text" id="updateRole" placeholder="Role" value="Administrator"><br>
+    <button onclick="updateUser()">Update User</button>
+
+    <h2>Delete User</h2>
+    <input type="text" id="delete-user-id" placeholder="Enter user ID" value="1"><br>
+    <button onclick="deleteUser()">Delete User</button>
+  </main>
+</body>
+</html>

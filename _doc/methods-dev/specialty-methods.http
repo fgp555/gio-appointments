@@ -1,0 +1,34 @@
+### Get all specialties
+GET http://localhost:3000/api/specialties
+Accept: application/json
+
+###
+
+### Get a single specialty by ID
+GET http://localhost:3000/api/specialties/1
+Accept: application/json
+
+###
+
+### Create a new specialty
+POST http://localhost:3000/api/specialties
+Content-Type: application/json
+
+{
+  "name": "Cardiología"
+}
+
+###
+
+### Update a specialty
+PUT http://localhost:3000/api/specialties/1
+Content-Type: application/json
+
+{
+  "name": "Neurología"
+}
+
+###
+
+### Delete a specialty
+DELETE http://localhost:3000/api/specialties/1

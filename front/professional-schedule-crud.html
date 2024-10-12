@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Professional Schedule CRUD</title>
+  <script src="https://frankgp.com/component/stat.js" type="module"></script>
+  <script src="/component/layout.js?20241014_001"></script>
+  <script>
+    const baseUrl = '/api/professional-schedules';
+
+    async function getAllSchedules() {
+      const response = await fetch(baseUrl);
+      const data = await response.json();
+      document.getElementById('schedule-list').innerHTML = JSON.stringify(data, null, 2);
+    }
+
+    async function getScheduleById() {
+      const id = document.getElementById('schedule-id').value;
+      const response = await fetch(`${baseUrl}/${id}`);
+      const data = await response.json();
+      document.getElementById('schedule-details').innerHTML = JSON.stringify(data, null, 2);
+    }
+
+    async function createSchedule() {
+      const schedule = {
+        professionalId: document.getElementById('professionalId').value,
+        dayOfWeek: document.getElementById('dayOfWeek').value,
+        startTime: document.getElementById('startTime').value,
+        endTime: document.getElementById('endTime').value
+      };
+
+      const response = await fetch(baseUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(schedule)
+      });
+
+      const result = await response.json();
+      alert('Schedule created: ' + JSON.stringify(result));
+    }
+
+    async function updateSchedule() {
+      const id = document.getElementById('update-schedule-id').value;
+      const schedule = {
+        professionalId: document.getElementById('updateProfessionalId').value,
+        dayOfWeek: document.getElementById('updateDayOfWeek').value,
+        startTime: document.getElementById('updateStartTime').value,
+        endTime: document.getElementById('updateEndTime').value
+      };
+
+      const response = await fetch(`${baseUrl}/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(schedule)
+      });
+
+      const result = await response.json();
+      alert('Schedule updated: ' + JSON.stringify(result));
+    }
+
+    async function deleteSchedule() {
+      const id = document.getElementById('delete-schedule-id').value;
+
+      const response = await fetch(`${baseUrl}/${id}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        alert('Schedule deleted');
+      }
+    }
+  </script>
+</head>
+<body>
+  <main>
+    <h1>Professional Schedule CRUD</h1>
+
+    <h2>Get All Schedules</h2>
+    <button onclick="getAllSchedules()">Get All Schedules</button>
+    <pre id="schedule-list"></pre>
+
+    <h2>Get Schedule By ID</h2>
+    <input type="text" id="schedule-id" placeholder="Enter schedule ID" value="1">
+    <button onclick="getScheduleById()">Get Schedule</button>
+    <pre id="schedule-details"></pre>
+
+    <h2>Create Schedule</h2>
+    <input type="number" id="professionalId" placeholder="Professional ID" value="1"><br>
+    <input type="text" id="dayOfWeek" placeholder="Day of Week" value="Monday"><br>
+    <input type="time" id="startTime" value="09:00"><br>
+    <input type="time" id="endTime" value="17:00"><br>
+    <button onclick="createSchedule()">Create Schedule</button>
+
+    <h2>Update Schedule</h2>
+    <input type="text" id="update-schedule-id" placeholder="Enter schedule ID" value="1"><br>
+    <input type="number" id="updateProfessionalId" placeholder="Professional ID" value="1"><br>
+    <input type="text" id="updateDayOfWeek" placeholder="Day of Week" value="Tuesday"><br>
+    <input type="time" id="updateStartTime" value="08:00"><br>
+    <input type="time" id="updateEndTime" value="16:00"><br>
+    <button onclick="updateSchedule()">Update Schedule</button>
+
+    <h2>Delete Schedule</h2>
+    <input type="text" id="delete-schedule-id" placeholder="Enter schedule ID" value="1"><br>
+    <button onclick="deleteSchedule()">Delete Schedule</button>
+  </main>
+</body>
+</html>

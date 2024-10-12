@@ -1,0 +1,42 @@
+### Get all professionals
+GET http://localhost:3000/api/professionals
+Accept: application/json
+
+###
+
+### Get a single professional by ID
+GET http://localhost:3000/api/professionals/1
+Accept: application/json
+
+###
+
+### Create a new professional
+POST http://localhost:3000/api/professionals
+Content-Type: application/json
+
+{
+  "firstName": "Dr. Roberto",
+  "lastName": "Sánchez",
+  "email": "roberto.sanchez@example.com",
+  "phone": "555-4321",
+  "specialtyId": 1
+}
+
+###
+
+### Update a professional
+PUT http://localhost:3000/api/professionals/1
+Content-Type: application/json
+
+{
+  "firstName": "Dr. Roberto",
+  "lastName": "Sánchez García",
+  "email": "roberto.garcia@example.com",
+  "phone": "555-4322",
+  "specialtyId": 1
+}
+
+###
+
+### Delete a professional
+DELETE http://localhost:3000/api/professionals/1

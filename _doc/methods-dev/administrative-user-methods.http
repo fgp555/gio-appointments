@@ -1,0 +1,38 @@
+### Get all administrative users
+GET http://localhost:3000/api/administrative-users
+Accept: application/json
+
+###
+
+### Get a single administrative user by ID
+GET http://localhost:3000/api/administrative-users/1
+Accept: application/json
+
+###
+
+### Create a new administrative user
+POST http://localhost:3000/api/administrative-users
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123",
+  "role": "Administrador"
+}
+
+###
+
+### Update an administrative user
+PUT http://localhost:3000/api/administrative-users/1
+Content-Type: application/json
+
+{
+  "username": "admin2",
+  "password": "admin123",
+  "role": "Administrador"
+}
+
+###
+
+### Delete an administrative user
+DELETE http://localhost:3000/api/administrative-users/1

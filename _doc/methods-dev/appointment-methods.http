@@ -1,0 +1,42 @@
+### Get all appointments
+GET http://localhost:3000/api/appointments
+Accept: application/json
+
+###
+
+### Get a single appointment by ID
+GET http://localhost:3000/api/appointments/1
+Accept: application/json
+
+###
+
+### Create a new appointment
+POST http://localhost:3000/api/appointments
+Content-Type: application/json
+
+{
+  "patientId": 1,
+  "professionalId": 1,
+  "appointmentDate": "2024-10-12T09:00:00",
+  "status": "confirmada",
+  "reason": "Consulta de rutina"
+}
+
+###
+
+### Update an appointment
+PUT http://localhost:3000/api/appointments/1
+Content-Type: application/json
+
+{
+  "patientId": 1,
+  "professionalId": 1,
+  "appointmentDate": "2024-10-13T10:30:00",
+  "status": "confirmada",
+  "reason": "Chequeo general"
+}
+
+###
+
+### Delete an appointment
+DELETE http://localhost:3000/api/appointments/1

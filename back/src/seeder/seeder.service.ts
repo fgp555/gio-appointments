@@ -1,35 +1,30 @@
-// src/seeder/seeder.service.ts
+// back/src/seeder/seeder.service.ts
 
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from 'src/user/user.entity';
-import { Repository } from 'typeorm';
+import { PatientSeeder } from './patient.seeder';
+import { ProfessionalSeeder } from './professional.seeder';
+import { AppointmentSeeder } from './appointment.seeder';
+import { SpecialtySeeder } from './specialty.seeder';
+import { ProfessionalScheduleSeeder } from './professional_schedule.seeder';
+import { AdministrativeUserSeeder } from './administrative_user.seeder';
 
 @Injectable()
 export class SeederService {
   constructor(
-    @InjectRepository(UserEntity)
-    private readonly userRepository: Repository<UserEntity>,
+    private readonly patientSeeder: PatientSeeder,
+    private readonly professionalSeeder: ProfessionalSeeder,
+    private readonly appointmentSeeder: AppointmentSeeder,
+    private readonly specialtySeeder: SpecialtySeeder,
+    private readonly scheduleSeeder: ProfessionalScheduleSeeder,
+    private readonly adminUserSeeder: AdministrativeUserSeeder,
   ) {}
 
-  async seed() {
-    // Datos de usuarios
-    const usersData = [
-      {
-        "email": "john.doe@example.com",
-        "password": "password123",
-        "firstName": "John",
-        "lastName": "Doe"
-      }
-    ];
-
-    // Guardar usuarios
-    const savedUsers = [];
-    for (const userData of usersData) {
-      const user = await this.userRepository.save(userData);
-      savedUsers.push(user);
-    }
-
-    console.log('Datos de prueba creados con éxito');
+  async seedAll() {
+    await this.specialtySeeder.seed();
+    await this.patientSeeder.seed();
+    await this.professionalSeeder.seed();
+    await this.scheduleSeeder.seed();
+    await this.appointmentSeeder.seed();
+    await this.adminUserSeeder.seed();
   }
 }

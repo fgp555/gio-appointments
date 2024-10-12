@@ -6,11 +6,8 @@ const common_1 = require("@nestjs/common");
 const morgan = require("morgan");
 const cors = require("cors");
 const path_1 = require("path");
-const seeder_service_1 = require("./seeder/seeder.service");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
-    const seederService = app.get(seeder_service_1.SeederService);
-    await seederService.seed();
     app.setGlobalPrefix('api');
     app.use(cors());
     app.use(morgan('dev'));

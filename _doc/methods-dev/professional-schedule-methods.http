@@ -1,0 +1,40 @@
+### Get all professional schedules
+GET http://localhost:3000/api/professional-schedules
+Accept: application/json
+
+###
+
+### Get a single professional schedule by ID
+GET http://localhost:3000/api/professional-schedules/1
+Accept: application/json
+
+###
+
+### Create a new professional schedule
+POST http://localhost:3000/api/professional-schedules
+Content-Type: application/json
+
+{
+  "professionalId": 1,
+  "dayOfWeek": "Lunes",
+  "startTime": "09:00",
+  "endTime": "17:00"
+}
+
+###
+
+### Update a professional schedule
+PUT http://localhost:3000/api/professional-schedules/1
+Content-Type: application/json
+
+{
+  "professionalId": 1,
+  "dayOfWeek": "Martes",
+  "startTime": "10:00",
+  "endTime": "18:00"
+}
+
+###
+
+### Delete a professional schedule
+DELETE http://localhost:3000/api/professional-schedules/1

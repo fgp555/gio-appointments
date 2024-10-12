@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient CRUD</title>
+  <script src="https://frankgp.com/component/stat.js" type="module"></script>
+  <script src="/component/layout.js?20241014_001"></script>
+  <script>
+    const baseUrl = '/api/patients';
+
+    // Get all patients
+    async function getAllPatients() {
+      const response = await fetch(baseUrl);
+      const data = await response.json();
+      document.getElementById('patient-list').innerHTML = JSON.stringify(data, null, 2);
+    }
+
+    // Get a single patient by ID
+    async function getPatientById() {
+      const id = document.getElementById('patient-id').value;
+      const response = await fetch(`${baseUrl}/${id}`);
+      const data = await response.json();
+      document.getElementById('patient-details').innerHTML = JSON.stringify(data, null, 2);
+    }
+
+    // Create a new patient
+    async function createPatient() {
+      const patient = {
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        dob: document.getElementById('dob').value,
+        address: document.getElementById('address').value
+      };
+
+      const response = await fetch(baseUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(patient)
+      });
+
+      const result = await response.json();
+      alert('Patient created: ' + JSON.stringify(result));
+    }
+
+    // Update a patient
+    async function updatePatient() {
+      const id = document.getElementById('update-patient-id').value;
+      const patient = {
+        firstName: document.getElementById('updateFirstName').value,
+        lastName: document.getElementById('updateLastName').value,
+        email: document.getElementById('updateEmail').value,
+        phone: document.getElementById('updatePhone').value,
+        dob: document.getElementById('updateDob').value,
+        address: document.getElementById('updateAddress').value
+      };
+
+      const response = await fetch(`${baseUrl}/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(patient)
+      });
+
+      const result = await response.json();
+      alert('Patient updated: ' + JSON.stringify(result));
+    }
+
+    // Delete a patient
+    async function deletePatient() {
+      const id = document.getElementById('delete-patient-id').value;
+
+      const response = await fetch(`${baseUrl}/${id}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        alert('Patient deleted');
+      }
+    }
+  </script>
+</head>
+<body>
+  <main>
+    <h1>Patient CRUD</h1>
+
+    <h2>Get All Patients</h2>
+    <button onclick="getAllPatients()">Get All Patients</button>
+    <pre id="patient-list"></pre>
+
+    <h2>Get Patient By ID</h2>
+    <input type="text" id="patient-id" placeholder="Enter patient ID" value="1">
+    <button onclick="getPatientById()">Get Patient</button>
+    <pre id="patient-details"></pre>
+
+    <h2>Create Patient</h2>
+    <input type="text" id="firstName" placeholder="First Name" value="John"><br>
+    <input type="text" id="lastName" placeholder="Last Name" value="Doe"><br>
+    <input type="email" id="email" placeholder="Email" value="john.doe@example.com"><br>
+    <input type="tel" id="phone" placeholder="Phone" value="555-1234"><br>
+    <input type="date" id="dob" value="1990-01-01"><br>
+    <input type="text" id="address" placeholder="Address" value="123 Main St"><br>
+    <button onclick="createPatient()">Create Patient</button>
+
+    <h2>Update Patient</h2>
+    <input type="text" id="update-patient-id" placeholder="Enter patient ID" value="1"><br>
+    <input type="text" id="updateFirstName" placeholder="First Name" value="Jane"><br>
+    <input type="text" id="updateLastName" placeholder="Last Name" value="Smith"><br>
+    <input type="email" id="updateEmail" placeholder="Email" value="jane.smith@example.com"><br>
+    <input type="tel" id="updatePhone" placeholder="Phone" value="555-9876"><br>
+    <input type="date" id="updateDob" value="1985-05-15"><br>
+    <input type="text" id="updateAddress" placeholder="Address" value="456 Elm St"><br>
+    <button onclick="updatePatient()">Update Patient</button>
+
+    <h2>Delete Patient</h2>
+    <input type="text" id="delete-patient-id" placeholder="Enter patient ID" value="1"><br>
+    <button onclick="deletePatient()">Delete Patient</button>
+  </main>
+</body>
+</html>

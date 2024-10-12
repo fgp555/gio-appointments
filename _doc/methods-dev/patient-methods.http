@@ -1,0 +1,44 @@
+### Get all patients
+GET http://localhost:3000/api/patients
+Accept: application/json
+
+###
+
+### Get a single patient by ID
+GET http://localhost:3000/api/patients/1
+Accept: application/json
+
+###
+
+### Create a new patient
+POST http://localhost:3000/api/patients
+Content-Type: application/json
+
+{
+  "firstName": "Juan",
+  "lastName": "Pérez",
+  "email": "juan.perez@example.com",
+  "phone": "555-1234",
+  "dob": "1980-05-12",
+  "address": "Calle Falsa 123"
+}
+
+###
+
+### Update a patient
+PUT http://localhost:3000/api/patients/1
+Content-Type: application/json
+
+{
+  "firstName": "Juan Carlos",
+  "lastName": "Pérez",
+  "email": "juan.c.perez@example.com",
+  "phone": "555-4321",
+  "dob": "1980-05-12",
+  "address": "Calle Nueva 456"
+}
+
+###
+
+### Delete a patient
+DELETE http://localhost:3000/api/patients/1
